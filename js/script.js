@@ -103,6 +103,7 @@ function showModal(){
         modal.classList.add('show');
         modal.classList.remove('hide');
         document.body.style.overflow = 'hidden';
+        clearInterval(modelTimer);
 
 }
 function closeModal(){
@@ -124,12 +125,16 @@ document.addEventListener('keydown', (e)=>{
         closeModal();
     }
 });
+const modelTimer = setTimeout(showModal, 15000);
 
-
-    
-
-
-
+function showModalByScroll(){
+    if ( window.pageYOffset + document.documentElement.clientHeight >= 
+        document.documentElement.scrollHeight){
+            showModal();
+            window.removeEventListener('scroll', showModalByScroll);
+    }
+}
+window.addEventListener('scroll', showModalByScroll);
     
 
 });
