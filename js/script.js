@@ -89,7 +89,48 @@ function setClock(selector, endtime) {
 }
 setClock('.timer', deadline);
 
+//modal window
+const ModalTrigger = document.querySelectorAll('[data-modal]'),
+modal = document.querySelector('.modal'),
+ModalCloseBtn = document.querySelector('[data-close]');
 
+//нам треба буде дві функціїї, перша, це, при натисненні кнопки модальне вікно відкривається
+//друга функція - навпаки, закриває модальне вікно
+ModalTrigger.forEach(btn => {
+    btn.addEventListener('click', showModal);
+});
+function showModal(){
+        modal.classList.add('show');
+        modal.classList.remove('hide');
+        document.body.style.overflow = 'hidden';
+
+}
+function closeModal(){
+    modal.classList.add('hide');
+    modal.classList.remove('show');
+    document.body.style.overflow = '';
+    
+}
+modal.addEventListener('click', function(e){
+    if(e.target === modal){
+        closeModal();
+    }
+});
+ModalCloseBtn.addEventListener('click', closeModal);
+
+
+document.addEventListener('keydown', (e)=>{
+    if(e.code === 'Escape' && modal.classList.contains('show')){
+        closeModal();
+    }
+});
+
+
+    
+
+
+
+    
 
 });
 
