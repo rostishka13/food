@@ -125,7 +125,7 @@ document.addEventListener('keydown', (e)=>{
         closeModal();
     }
 });
-// const modelTimer = setTimeout(showModal, 15000);
+const modelTimer = setTimeout(showModal, 1500000);
 
 function showModalByScroll(){
     if ( window.pageYOffset + document.documentElement.clientHeight >= 
@@ -211,5 +211,51 @@ window.addEventListener('scroll', showModalByScroll);
         '.menu .container', 
         'menu__item'
     ).render();
+
+
+    //forms
+
+const forms = document.querySelectorAll('form');
+
+const message = {
+    loading: 'loading',
+    success: 'Thank you',
+    fail: 'something went wrong'
+};
+
+forms.forEach(item => {
+    postData(item);
 });
 
+function postData(form){
+    form.addEventListener('submit', (e)=>{
+        e.preventDefault();
+
+        const statusMessage = document.createElement('div');
+        statusMessage.classList.add('status');
+        statusMessage.textContent = message.loading;
+        form.append(statusMessage);
+        const request = XMLHttpRequest();
+        request.open('POST', 'server.php');
+        request.setRequestHeader('content-type', 'multipart/form-data');
+
+        const formData = new FormData(form);
+
+        request.send(FormData);
+        request.addEventListener('load', () => {
+            if(request.status === 200){
+                console.log(request.response);
+                statusMessage.textContent = message.success;
+            }else{
+                statusMessage.textContent = message.fail;
+            }
+           
+        });
+    });
+}
+
+
+
+
+
+    });
